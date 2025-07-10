@@ -1,102 +1,123 @@
-# Frontend Mentor - Product list with cart
+📦 Product List with Cart – From Pixels to Interactions
 
-![Design preview for the Product list with cart coding challenge](./preview.jpg)
+    “Code is not just instructions. It’s an experience we craft.”
 
-## Welcome! 👋
+Preview
 
-Thanks for checking out this front-end coding challenge.
+Welcome to the codebase behind the Product List with Cart challenge from Frontend Mentor.
+This repository isn't just a set of files — it's a journey from static design to dynamic interactivity, crafted with plain HTML, CSS, and JavaScript.
+🧭 Challenge Summary
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+    A dynamic e-commerce interface where users can:
 
-**To do this challenge, you need a good understanding of HTML, CSS and JavaScript.**
+    🛒 Add/remove items from a cart
 
-## The challenge
+    ➕ Adjust quantities
 
-Your challenge is to build out this product list project that includes a functional cart and get it looking as close to the design as possible.
+    📦 View confirmation modals
 
-You can use any tools you like to help you complete the challenge. So, if you have something you'd like to practice, feel free to give it a go.
+    🔄 Reset their cart
 
-We provide the data for the products in a local `data.json` file. So you can use that to populate the UI dynamically if you choose.
+    📱 Enjoy fully responsive layouts
 
-Your users should be able to:
+    🧠 Experience subtle interactivity across hover/focus states
 
-- Add items to the cart and remove them
-- Increase/decrease the number of items in the cart
-- See an order confirmation modal when they click "Confirm Order"
-- Reset their selections when they click "Start New Order"
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+All while using zero frameworks, just the raw power of the DOM and logic.
+🛤️ My Dev Process (A Timeline)
+📂 1. File Discovery
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+    data.json: The heart — where all product details live
 
-## Where to find everything
+    /design: A JPG-only design challenge, so I had to "eyeball" typography, spacing, and sizing 🎯
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design.
+🧱 2. HTML First: Skeleton Before Skin
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`.
+    I mapped out semantic HTML blocks for layout clarity.
 
-If you would like the Figma design file to gain experience using professional tools and build more accurate projects faster, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+    Focused on accessibility, using proper button, aria, and role attributes.
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+🎨 3. CSS Magic
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+    Built with a mobile-first design, gradually layering in breakpoints.
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+    CSS Variables + BEM Naming = 💪 scalable styling.
 
-## Building your project
+⚙️ 4. JavaScript Logic
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+    “Every UI interaction is a state transition. Nothing more.”
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+    Built a cart model using vanilla JS — no libraries, just functions and memory.
 
-## Deploying your project
+    DOM updates in response to user interaction: quantity control, remove items, reset, confirm.
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+    Event delegation and dynamic rendering made the logic clean and fast.
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+🔧 Tech & Tools Used
+Tool	Purpose
+HTML5	Semantic structure
+CSS3	Flexbox, media queries, transitions
+JavaScript	UI logic & state
+data.json	Product data source
+VSCode + Live Server	Local dev
+Git + GitHub Pages	Versioning & hosting
+💡 Design Decisions
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+    “Every line of code either simplifies or complicates the future.”
 
-## Create a custom `README.md`
+    Used pure DOM manipulation to reinforce vanilla JS skills.
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+    Prioritised progressive enhancement — works well even if JavaScript fails partially.
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+    Built a modular, extendable cart logic that can scale to localStorage or backend easily.
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+🌍 Live Demo
 
-## Submitting your solution
+🔗 View Live Site
+📁 Folder Layout
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+📦 product-list-with-cart
+├── 📂 assets/         → icons, images, fonts
+├── 📂 design/         → static JPGs of UI layout
+├── 📄 index.html      → main HTML structure
+├── 📄 style.css       → all visual styles
+├── 📄 script.js       → cart logic + interactivity
+├── 📄 data.json       → product list source
+├── 📄 style-guide.md  → color & typography guide
+└── 📄 README.md       → this file
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+📷 Screenshots
+Desktop View	Mobile View
+	
+🧠 Key Learnings
 
-## Sharing your solution
+    📦 State is everything: A well-structured JS object can control the entire cart logic.
 
-There are multiple places you can share your solution:
+    📱 Mobile-first makes everything cleaner.
 
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community).
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+    🎯 Eyeballing design specs from JPGs is harder than it sounds — but it sharpens your eye.
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback.
+    ✨ Micro-interactions (hover, active, modal feedback) make or break a polished UI.
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+🧪 What I’d Add Next
 
-## Got feedback for us?
+    🗃️ localStorage to persist cart on refresh
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+    🔍 Search and filter by product type
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
+    🧪 Unit testing with Jest
 
-**Have fun building!** 🚀
+    🌙 Dark mode toggle
 
-# Product-list-with-cart
+    ♿ Enhanced ARIA + screen reader support
+
+👤 Author
+
+Lavish Sharma
+🔗 Behance | GitHub | LinkedIn
+🤝 Let’s Talk
+
+If you’ve got feedback, ideas, or just want to geek out about frontend — connect with me or tweet @lavishs71762471 with a shoutout!
+
+    “Design brings form. Code gives it life.”
+
+Thanks for stopping by! 🧡
