@@ -170,22 +170,21 @@ strong {
 .cart-button {
     appearance: none;
     color: var(--Rose900);
-    border: var(--Rose900);
     border: 1px solid var(--Rose900);
+    padding: 0.65rem;
     border-radius: 50vh;
     white-space: nowrap;
-    padding: 0.75rem 1.25rem;
     min-width: 150px;
     height: 43px;
-    display: flex;
-    position: absolute;
-    bottom: -1rem;
-    left: 50%;
+    display: none;
     flex-flow: row nowrap;
     justify-content: space-evenly;
     align-items: center;
-    cursor: pointer;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
     transform: translateX(-50%);
+    cursor: pointer;
     transition: all 300ms ease-in-out;
     z-index: 1;
 
@@ -197,15 +196,24 @@ strong {
     }
 }
 
+.cart-button.active {
+    display: flex;
+}
+
 .more-less {
+    appearance: none;
+    border: none;
+    background: none;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    width: 18px;
-    height: 18px;
     border: 1px solid var(--white);
     border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
 }
 
 .more-less svg {
@@ -235,12 +243,12 @@ strong {
     border-radius: 50vh;
     min-width: 150px;
     height: 43px;
-    padding: 0.65rem 1.25rem;
+    padding: 0.65rem 1rem;
     position: absolute;
     bottom: -1rem;
     left: 50%;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
     transform: translateX(-50%);
@@ -413,4 +421,8 @@ strong {
     color: var(--red);
     transform: scale(1.05);
     box-shadow: 0 7px 10px var(--red);
+}
+
+.copyright {
+    text-align: center;
 }
