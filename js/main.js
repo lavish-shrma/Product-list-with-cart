@@ -1,34 +1,56 @@
 function copyright() {
-    const date = document.getElementById('date');
-    const year = new Date().getFullYear();
-    if (date) {
-        date.innerHTML = year;
-    };
+  const date = document.getElementById('date');
+  const year = new Date().getFullYear();
+  if (date) {
+    date.innerHTML = year;
+  };
 };
 
 async function loadJson(filepath) {
-    try {
-        const response = await fetch(filepath);
-        if (!response) {
-            throw new Error(`Network response was not ok`);
-        };
-        const date = await response.json();
-        return date;
-    } catch (error) {
-        throw new Error(`Error loading JSON ${error.message}`);
+  try {
+    const response = await fetch(filepath);
+    if (!response) {
+      throw new Error(`Network response was not ok`);
     };
+    const date = await response.json();
+    return date;
+  } catch (error) {
+    throw new Error(`Error loading JSON ${error.message}`);
+  };
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    copyright();
-    loadJson("data.json")
-        .then((data) => {
-            const gridWrap = document.querySelector(".grid-wrap");
-            data.forEach((item) => {
-                const article = document.createElement("article");
-                article.classList.add('grid-item');
+function toggleButton() {
+  const gridWrap = document.querySelector(".grid-wrap")
 
-                article.innerHTML = `
+  // use event delagation to handle clicks on .cart-buttons
+  gridWrap.addEventListener("click", (e) => {
+    if (e.target.classList.contains("cart-button")) {
+      const cartButton = e.target;
+      const cartPlusMinus = cartButton.nextElementSibling;
+
+      if (cartPlusMinus && cartPlusMinus.classList.contains("cart-plus-minus")) {
+        if (cartButton.classList.contains("active")) {
+          cartButton.classList.remove("active");
+          cartPlusMinus.classList.add("active");
+        } else {
+          cartButton.classList.add("active");
+          cartPlusMinus.classList.remove("active");
+        }
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  copyright();
+  loadJson("data.json")
+    .then((data) => {
+      const gridWrap = document.querySelector(".grid-wrap");
+      data.forEach((item) => {
+        const article = document.createElement("article");
+        article.classList.add('grid-item');
+
+        article.innerHTML = `
                 <div class="button-container">
                         <figure class="image-container">
                         <img
@@ -36,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             alt="${item.name}"
                         />
                         </figure>
-                        <button class="cart-button">
+                        <button class="cart-button active">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="21"
@@ -60,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </svg>
                         Add to Cart
                         </button>
-                        <div class="cart-plus-minus active">
+                        <div class="cart-plus-minus">
                         <span class="access-hidden">Cart Quantity</span>
                         <button class="more-less">
                             <svg
@@ -94,12 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 class="tertiary-header">${item.name}</h3>
                     <div class="item-price">${item.price}</div>
                 `;
-                gridWrap.appendChild(article);
-            });
-        })
-        .catch(error => {
-            console.log(`Error laoding JSON data: `, error);
-        });
+        gridWrap.appendChild(article);
+      });
+      toggleButton();
+    })
+    .catch(error => {
+      console.log(`Error laoding JSON data: `, error);
+    });
 });
 
 /* <article class="grid-item">
