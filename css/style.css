@@ -227,7 +227,6 @@ strong {
     fill: var(--white);
 }
 
-
 .item-category {
     font-size: 0.9rem;
     color: var(--Rose500);
@@ -271,20 +270,17 @@ strong {
 }
 
 .empty-cart {
-    display: none;
+    display: block;
     margin: 0 auto;
-
-    &.active {
-        display: block;
-    }
+    text-align: center;
 }
 
 .full-cart {
     display: block;
+}
 
-    &.active {
-        display: none;
-    }
+.full-cart+.empty-cart {
+    display: none;
 }
 
 .cart-item {
@@ -359,7 +355,6 @@ strong {
 .remove-item:focus {
     border-color: var(--Rose900);
 }
-
 
 .remove-item:hover>svg,
 .remove-item:active>svg,
