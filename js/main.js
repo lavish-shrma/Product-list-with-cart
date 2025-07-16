@@ -79,7 +79,7 @@ function addToCart(gridItem) {
 
   // append to the sidebar
   const cartSidebar = document.querySelector(".side-wrap");
-  cartSidebar.appendChild
+  cartSidebar.appendChild(cartItem);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
