@@ -80,6 +80,8 @@ function addToCart(gridItem) {
     cartSidebar.appendChild(cartItem);
   };
 
+  const cartButton = grid
+
 
 
   //  add functionality to remove the item from the cart
@@ -93,19 +95,6 @@ function addToCart(gridItem) {
   // add functionality for increment and decrement quantity
   const incrementButton = gridItem.querySelector(".increment");
   const decrementButton = gridItem.querySelector(".decrement");
-
-
-  // if (incrementButton) {
-  //   incrementButton.addEventListener("click", () => {
-  //     currentQuantity++;
-  //     itemQuantitySpan.innerText = `${currentQuantity}x`;
-  //     itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
-
-  //   });
-  // } else {
-  //   console.warn('Increment button not found inside gridItem', gridItem);
-  // }
-
 
   incrementButton.addEventListener("click", () => {
     currentQuantity++;
