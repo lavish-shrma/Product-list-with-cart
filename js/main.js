@@ -24,44 +24,41 @@ function toggleButton() {
 
   // use event delagation to handle clicks on .cart-buttons
   gridWrap.addEventListener("click", (e) => {
-    if (e.target.classList.contains("cart-button")) {
-      const cartButton = e.target;
+    const cartButton = e.target.closest(".cart-button");
+
+    if (cartButton) {
       const cartPlusMinus = cartButton.nextElementSibling;
 
-      if (cartPlusMinus && cartPlusMinus.classList.contains("cart-plus-minus")) {
+      if (cartPlusMinus) {
         if (cartButton.classList.contains("active")) {
+          /* Remove active to t he button, add it from cart-plus-minus */
           cartButton.classList.remove("active");
           cartPlusMinus.classList.add("active");
-        } else {
-          cartButton.classList.add("active");
-          cartPlusMinus.classList.remove("active");
 
+          // Add item to the cart
           const gridItem = cartButton.closest(".grid-item");
           addToCart(gridItem);
         }
       }
     }
   });
-}
+};
 
 function addToCart(gridItem) {
   const itemName = gridItem.querySelector('.tertiary-header').innerText;
-  const itemPrice = gridItem.querySelector('.item-price').innerText;
+  const itemPrice = parseFloat(gridItem.querySelector('.item-price').innerText.replace("$", ""));
+  let currentQuantity = 1;
 
   const cartItem = document.createElement('article');
   cartItem.classList.add('cart-item');
   cartItem.innerHTML = `
-    <div class="cart-quantity">
-      <p class="cart-heading">${itemName}</p>
-      <div class="quantity-wrap">
-        <span class="quantity">1x</span>
-        <span class="each-item">${itemPrice}</span>
-        <span class="item-total">$5.50</span>
+    $1<span class="quantity">${currentQuantity}x</span>
+      <span class="each-item">@$${itemPrice.toFixed(2)}</span>
+      <span class="item-total">@$${itemPrice.toFixed(2)}</span>
       </div>
     </div>
     <button class="remove-item">
-      <span class="access-hidden">Remove Item</span>
-      <svg
+    <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="10"
@@ -77,10 +74,53 @@ function addToCart(gridItem) {
     </button>
   `;
 
-  // append to the sidebar
+  // append the new car to the sidebar
   const cartSidebar = document.querySelector(".side-wrap");
-  cartSidebar.appendChild(cartItem);
-}
+  if (cartSidebar) {
+    cartSidebar.appendChild(cartItem);
+  };
+
+
+
+  //  add functionality to remove the item from the cart
+  const removeButton = cartItem.querySelector(".remove-item");
+  const itemQuantitySpan = cartItem.querySelector(".quantity");
+  const itemTotalSpan = cartItem.querySelector(".item-total")
+  removeButton.addEventListener("click", () => {
+    cartSidebar.removeChild(cartItem);
+  });
+
+  // add functionality for increment and decrement quantity
+  const incrementButton = gridItem.querySelector(".increment");
+  const decrementButton = gridItem.querySelector(".decrement");
+
+
+  // if (incrementButton) {
+  //   incrementButton.addEventListener("click", () => {
+  //     currentQuantity++;
+  //     itemQuantitySpan.innerText = `${currentQuantity}x`;
+  //     itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
+
+  //   });
+  // } else {
+  //   console.warn('Increment button not found inside gridItem', gridItem);
+  // }
+
+
+  incrementButton.addEventListener("click", () => {
+    currentQuantity++;
+    itemQuantitySpan.innerText = `${currentQuantity}x`;
+    itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
+  });
+
+  decrementButton.addEventListener("click", () => {
+    if (currentQuantity > 1) {
+      currentQuantity--;
+      itemQuantitySpan.innerText = `${currentQuantity}x`;
+      itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
+    }
+  });
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
@@ -166,11 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* 
+/*
 <div class="full-cart">
   <h2 class="secondary-header">Your Cart (7)</h2>
   <div class="cart-container">
-    
     <article class="cart-item">
       <div class="cart-quantity">
         <p class="cart-heading">Tiramisu</p>
