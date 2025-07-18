@@ -9,7 +9,7 @@ function copyright() {
 async function loadJson(filepath) {
   try {
     const response = await fetch(filepath);
-    if (!response) {
+    if (!response.ok) {
       throw new Error(`Network response was not ok`);
     };
     const date = await response.json();
@@ -51,26 +51,30 @@ function addToCart(gridItem) {
 
   const cartItem = document.createElement('article');
   cartItem.classList.add('cart-item');
+  cartItem.setAttribute('data-label', `${itemName}`);
   cartItem.innerHTML = `
-    $1<span class="quantity">${currentQuantity}x</span>
-      <span class="each-item">@$${itemPrice.toFixed(2)}</span>
-      <span class="item-total">@$${itemPrice.toFixed(2)}</span>
+    <div class="cart-quantity">
+      <p class="cart-heading">${itemName}</p>
+      <div class="quantity-wrap">
+        <span class="quantity">${currentQuantity}x</span>
+        <span class="each-item">@$${itemPrice.toFixed(2)}</span>
+        <span class="item-total">@$${itemPrice.toFixed(2)}</span>
       </div>
     </div>
     <button class="remove-item">
-    <svg
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        width="10"
-        height="10"
-        fill="none"
-        viewBox="0 0 10 10"
-      >
-        <path
-          fill=""
-          d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
-        />
-      </svg>
+      <svg
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="10"
+          fill="none"
+          viewBox="0 0 10 10"
+        >
+          <path
+            fill=""
+            d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
+          />
+        </svg>
     </button>
   `;
 
@@ -80,9 +84,11 @@ function addToCart(gridItem) {
     cartSidebar.appendChild(cartItem);
   };
 
-  const cartButton = gridItem.querySelector('.cart-button');
-  const cartPlusMinus = WebGLShaderPrecisionFormat.querySelector('.cart-plus-minus');
-
+  const cartButton = gridItem.querySelector(".cart-button");
+  const cartPlusMinus = gridItem.querySelector(".cart-plus-minus");
+  const gridItemQuantity = gridItem.querySelector(".item-quantity");
+  const dataGridItem = gridItem.getAttribute(`${itemName}`);
+  const dataCartItem = cartItem.getAttribute(`${itemName}`);
 
   //  add functionality to remove the item from the cart
   const removeButton = cartItem.querySelector(".remove-item");
@@ -90,6 +96,12 @@ function addToCart(gridItem) {
   const itemTotalSpan = cartItem.querySelector(".item-total")
   removeButton.addEventListener("click", () => {
     cartSidebar.removeChild(cartItem);
+
+    if (dataGridItem == dataCartItem) {
+      cartPlusMinus.classList.remove("active")
+      cartButton.classList.add("active");
+      gridItemQuantity.innerHTML = 1;
+    }
   });
 
   // add functionality for increment and decrement quantity
@@ -109,7 +121,40 @@ function addToCart(gridItem) {
       itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
     }
   });
-};
+}
+
+function setupCartPlusMinus() {
+  const gridWrap = document.querySelector(".grid-wrap");
+
+  if (!gridWrap) {
+    console.error("gridWrap not found");
+    return;
+  }
+
+  gridWrap.addEventListener("click", (e) => {
+    const decrementButton = e.target.closest(".decrement");
+    const incrementButton = e.target.closest(".increment");
+    let itemQuantitySpan;
+
+    if (decrementButton) {
+      itemQuantitySpan = decrementButton.nextElementSibling;
+      if (itemQuantitySpan && itemQuantitySpan.classList.contains("item-quantity")) {
+        let quantity = parseInt(itemQuantitySpan.innerText);
+        if (quantity > 1) {
+          itemQuantitySpan.innerText = quantity - 1;
+        }
+      }
+    }
+
+    if (incrementButton) {
+      itemQuantitySpan = incrementButton.previousElementSibling;
+      if (itemQuantitySpan && itemQuantitySpan.classList.contains("item-quantity")) {
+        let quantity = parseInt(itemQuantitySpan.innerText);
+        itemQuantitySpan.innerText = quantity + 1;
+      }
+    }
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
@@ -119,7 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
       data.forEach((item) => {
         const article = document.createElement("article");
         article.classList.add('grid-item');
-
+        article.setAttribute('data-label', `${item.name}`);
+        let itemQuantity = 1;
         article.innerHTML = `
                 <div class="button-container">
                         <figure class="image-container">
@@ -154,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </button>
                         <div class="cart-plus-minus">
                         <span class="access-hidden">Cart Quantity</span>
-                        <button class="more-less">
+                        <button class="more-less decrement">
                             <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="10"
@@ -165,8 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <path fill="" d="M0 .375h10v1.25H0V.375Z" />
                             </svg>
                         </button>
-                        <span class="item-quantity">1</span>
-                        <button class="more-less">
+                        <span class="item-quantity">${itemQuantity}</span>
+                        <button class="more-less increment">
                             <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="10"
@@ -189,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridWrap.appendChild(article);
       });
       toggleButton();
+      setupCartPlusMinus();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
