@@ -31,7 +31,7 @@ function toggleButton() {
 
       if (cartPlusMinus) {
         if (cartButton.classList.contains("active")) {
-          /* Remove active to t he button, add it from cart-plus-minus */
+          /* Remove active to the button, add it from cart-plus-minus */
           cartButton.classList.remove("active");
           cartPlusMinus.classList.add("active");
 
@@ -80,8 +80,8 @@ function addToCart(gridItem) {
     cartSidebar.appendChild(cartItem);
   };
 
-  const cartButton = grid
-
+  const cartButton = gridItem.querySelector('.cart-button');
+  const cartPlusMinus = WebGLShaderPrecisionFormat.querySelector('.cart-plus-minus');
 
 
   //  add functionality to remove the item from the cart
