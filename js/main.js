@@ -78,6 +78,15 @@ function addToCart(gridItem) {
     </button>
   `;
 
+  const cartItemQuantity = document.querySelectorAll(".cart-item");
+  let totalCartQuantity = 0;
+  cartItemQuantity.forEach((item) => {
+    const quantity = item.querySelector('quantity');
+    if (quantity >= 1) {
+      let itemQuantity = `${currentQuantity} * ${quantity}`;
+    }
+  })
+
   // append the new car to the sidebar
   const cartSidebar = document.querySelector(".side-wrap");
   if (cartSidebar) {
@@ -103,6 +112,20 @@ function addToCart(gridItem) {
       gridItemQuantity.innerHTML = 1;
     }
   });
+
+  const cartItems = document.querySelectorAll(".cart-item");
+  const cartCountElement = document.querySelector(".cart-count");
+  let totalQuantity = 0;
+
+  cartItems.forEach((item) => {
+    const quantityText = item.querySelector(".quantity").innerText;
+    const quantity = parseInt(quantityText);
+    totalQuantity += quantity;
+  });
+
+  if (cartCountElement) {
+    cartCountElement.innerText = totalQuantity;
+  }
 
   // add functionality for increment and decrement quantity
   const incrementButton = gridItem.querySelector(".increment");
@@ -158,6 +181,7 @@ function setupCartPlusMinus() {
 
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
+
   loadJson("data.json")
     .then((data) => {
       const gridWrap = document.querySelector(".grid-wrap");
@@ -236,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toggleButton();
       setupCartPlusMinus();
+      updateItemCount();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
@@ -246,62 +271,11 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="full-cart">
   <h2 class="secondary-header">Your Cart (7)</h2>
   <div class="cart-container">
-    <article class="cart-item">
-      <div class="cart-quantity">
-        <p class="cart-heading">Tiramisu</p>
-        <div class="quantity-wrap">
-          <span class="quantity">1x</span>
-          <span class="each-item">@$5.50</span>
-          <span class="item-total">$5.50</span>
-        </div>
-      </div>
-      <button class="remove-item">
-        <span class="access-hidden">Remove Item</span>
-        <svg
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="10"
-          height="10"
-          fill="none"
-          viewBox="0 0 10 10"
-        >
-          <path
-            fill=""
-            d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
-          />
-        </svg>
-      </button>
-    </article>
-    <article class="cart-item">
-      <div class="cart-quantity">
-        <p class="cart-heading">Tiramisu</p>
-        <div class="quantity-wrap">
-          <span class="quantity">1x</span>
-          <span class="each-item">@$5.50</span>
-          <span class="item-total">$5.50</span>
-        </div>
-      </div>
-      <button class="remove-item">
-        <span class="access-hidden">Remove Item</span>
-        <svg
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="10"
-          height="10"
-          fill="none"
-          viewBox="0 0 10 10"
-        >
-          <path
-            fill=""
-            d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
-          />
-        </svg>
-      </button>
-    </article>
+
   </div>
   <p class="order-total">
     <span>Order Total:</span>
-    <span class="total-amount"> $46.50</span>
+    <span class="total-amount">$46.50</span>
   </p>
   <div class="carbon-neutral">
     <svg
