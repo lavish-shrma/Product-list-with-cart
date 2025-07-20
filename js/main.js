@@ -105,6 +105,7 @@ function addToCart(gridItem) {
   const itemTotalSpan = cartItem.querySelector(".item-total")
   removeButton.addEventListener("click", () => {
     cartSidebar.removeChild(cartItem);
+    updateCartItemCount();
 
     if (dataGridItem == dataCartItem) {
       cartPlusMinus.classList.remove("active")
@@ -112,20 +113,6 @@ function addToCart(gridItem) {
       gridItemQuantity.innerHTML = 1;
     }
   });
-
-  const cartItems = document.querySelectorAll(".cart-item");
-  const cartCountElement = document.querySelector(".cart-count");
-  let totalQuantity = 0;
-
-  cartItems.forEach((item) => {
-    const quantityText = item.querySelector(".quantity").innerText;
-    const quantity = parseInt(quantityText);
-    totalQuantity += quantity;
-  });
-
-  if (cartCountElement) {
-    cartCountElement.innerText = totalQuantity;
-  }
 
   // add functionality for increment and decrement quantity
   const incrementButton = gridItem.querySelector(".increment");
@@ -135,6 +122,7 @@ function addToCart(gridItem) {
     currentQuantity++;
     itemQuantitySpan.innerText = `${currentQuantity}x`;
     itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
+    updateCartItemCount();
   });
 
   decrementButton.addEventListener("click", () => {
@@ -142,6 +130,7 @@ function addToCart(gridItem) {
       currentQuantity--;
       itemQuantitySpan.innerText = `${currentQuantity}x`;
       itemTotalSpan.innerText = `$${(itemPrice * currentQuantity).toFixed(2)}`;
+      updateCartItemCount();
     }
   });
 }
@@ -181,7 +170,21 @@ function setupCartPlusMinus() {
 
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
+  function updateCartItemCount() {
+    const cartItems = document.querySelectorAll(".cart-item");
+    const cartCountElement = document.querySelector(".cart-count");
+    let totalQuantity = 0;
 
+    cartItems.forEach((item) => {
+      const quantityText = item.querySelector(".quantity").innerText;
+      const quantity = parseInt(quantityText);
+      totalQuantity += quantity;
+    });
+
+    if (cartCountElement) {
+      cartCountElement.innerText = totalQuantity;
+    }
+  }
   loadJson("data.json")
     .then((data) => {
       const gridWrap = document.querySelector(".grid-wrap");
@@ -260,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toggleButton();
       setupCartPlusMinus();
-      updateItemCount();
+      updateCartItemCount();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
