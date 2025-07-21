@@ -78,15 +78,6 @@ function addToCart(gridItem) {
     </button>
   `;
 
-  // const cartItemQuantity = document.querySelectorAll(".cart-item");
-  // let totalCartQuantity = 0;
-  // cartItemQuantity.forEach((item) => {
-  //   const quantity = item.querySelector('quantity');
-  //   if (quantity >= 1) {
-  //     let itemQuantity = `${currentQuantity} * ${quantity}`;
-  //   }
-  // })
-
   // append the new car to the sidebar
   const cartSidebar = document.querySelector(".side-wrap");
   if (cartSidebar) {
@@ -266,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toggleButton();
       setupCartPlusMinus();
-      updateCartItemCount();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
