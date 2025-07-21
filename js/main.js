@@ -78,14 +78,14 @@ function addToCart(gridItem) {
     </button>
   `;
 
-  const cartItemQuantity = document.querySelectorAll(".cart-item");
-  let totalCartQuantity = 0;
-  cartItemQuantity.forEach((item) => {
-    const quantity = item.querySelector('quantity');
-    if (quantity >= 1) {
-      let itemQuantity = `${currentQuantity} * ${quantity}`;
-    }
-  })
+  // const cartItemQuantity = document.querySelectorAll(".cart-item");
+  // let totalCartQuantity = 0;
+  // cartItemQuantity.forEach((item) => {
+  //   const quantity = item.querySelector('quantity');
+  //   if (quantity >= 1) {
+  //     let itemQuantity = `${currentQuantity} * ${quantity}`;
+  //   }
+  // })
 
   // append the new car to the sidebar
   const cartSidebar = document.querySelector(".side-wrap");
@@ -98,6 +98,7 @@ function addToCart(gridItem) {
   const gridItemQuantity = gridItem.querySelector(".item-quantity");
   const dataGridItem = gridItem.getAttribute(`${itemName}`);
   const dataCartItem = cartItem.getAttribute(`${itemName}`);
+  updateCartItemCount();
 
   //  add functionality to remove the item from the cart
   const removeButton = cartItem.querySelector(".remove-item");
@@ -168,23 +169,25 @@ function setupCartPlusMinus() {
   });
 }
 
+function updateCartItemCount() {
+  const cartItems = document.querySelectorAll(".cart-item");
+  const cartCountElement = document.querySelector(".cart-count");
+  let totalQuantity = 0;
+
+  cartItems.forEach((item) => {
+    const quantityText = item.querySelector(".quantity").innerText;
+    const quantity = parseInt(quantityText);
+    totalQuantity += quantity;
+  });
+
+  if (cartCountElement) {
+    cartCountElement.innerText = totalQuantity;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
-  function updateCartItemCount() {
-    const cartItems = document.querySelectorAll(".cart-item");
-    const cartCountElement = document.querySelector(".cart-count");
-    let totalQuantity = 0;
 
-    cartItems.forEach((item) => {
-      const quantityText = item.querySelector(".quantity").innerText;
-      const quantity = parseInt(quantityText);
-      totalQuantity += quantity;
-    });
-
-    if (cartCountElement) {
-      cartCountElement.innerText = totalQuantity;
-    }
-  }
   loadJson("data.json")
     .then((data) => {
       const gridWrap = document.querySelector(".grid-wrap");
