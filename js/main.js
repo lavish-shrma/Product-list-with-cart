@@ -210,12 +210,27 @@ function clearCart() {
 
   clearCartBotton.addEventListener("click", () => {
     const cartItems = document.querySelectorAll(".cart-item");
+    const cartItemPopovers = document.querySelectorAll('.cart-item-popover');
     console.log(cartItems.length);
 
     // loop through all cart items and remove them
     if (cartItems.length >= 1) {
       cartItems.forEach((item) => item.remove());
+      cartItemPopovers.forEach((item) => item.remove());
     }
+
+    // reset grid items
+    const gridItems = document.querySelectorAll('.grid-item');
+    gridItems.forEach((gridItems) => {
+      const cartButton = gridItems.querySelector(".cart-button");
+      const cartPlusMinus = gridItems.querySelector(".cart-plus-minus");
+      const gridItemQuantity = gridItems.querySelector(".item-quantity");
+
+      // reset button classes and quantity
+      cartButton.classList.add("active");
+      cartPlusMinus.classList.add("active");
+      gridItemQuantity.innerHTML = 1;
+    });
 
     // update the cart item count and total amount after clearing
     updateCartItemCount();
