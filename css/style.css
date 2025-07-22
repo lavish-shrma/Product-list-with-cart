@@ -15,6 +15,8 @@
     --spacing: 1rem;
 }
 
+/* Yes. If the SVGs are purely decorative, adding aria-hidden="true" is the right move. */
+
 /* .red-hat-text-<uniquifier> {
   font-family: "Red Hat Text", sans-serif;
   font-optical-sizing: auto;
@@ -142,10 +144,17 @@ strong {
 
 .image-container {
     position: relative;
+    overflow: hidden;
     width: 100%;
     height: 0;
     margin: 0;
     padding-bottom: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 0 2px transparent;
+}
+
+.image-container:has(~ .cart-plus-minus.active) {
+    box-shadow: 0 0 0 2px var(--red);
 }
 
 @media (max-width: 600px) {
@@ -159,7 +168,6 @@ strong {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
 }
 
 .button-container {
@@ -204,29 +212,6 @@ strong {
     display: flex;
 }
 
-.more-less {
-    appearance: none;
-    border: none;
-    background: none;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid var(--white);
-    border-radius: 50%;
-    margin: 0;
-    padding: 0;
-    width: 18px;
-    height: 18px;
-}
-
-.more-less svg {
-    display: block;
-    width: 10px;
-    height: 10px;
-    fill: var(--white);
-}
-
 .item-category {
     font-size: 0.9rem;
     color: var(--Rose500);
@@ -253,13 +238,49 @@ strong {
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
     transform: translateX(-50%);
     z-index: 2;
 }
 
 .cart-plus-minus.active {
     display: flex;
+}
+
+.more-less {
+    appearance: none;
+    border: none;
+    background: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+
+.more-less svg {
+    display: block;
+    width: 10px;
+    height: 10px;
+    fill: var(--white);
+    transition: all 300ms ease-in-out;
+}
+
+.more-less {
+    cursor: pointer;
+}
+
+.more-less:hover,
+.more-less:active,
+.more-less:focus {
+    background-color: var(--white);
+    color: var(--black);
 }
 
 /* sidebar starts from here */
@@ -269,17 +290,23 @@ strong {
     border-radius: 10px;
 }
 
+/* Full cart is hidden on page load because the cart is empty */
+
+.full-cart {
+    display: none;
+}
+
+.full-cart:has(.cart-container > .cart-item) {
+    display: block;
+}
+
 .empty-cart {
     display: block;
     margin: 0 auto;
     text-align: center;
 }
 
-.full-cart {
-    display: block;
-}
-
-.full-cart+.empty-cart {
+.full-cart:has(.cart-container > .cart-item)+.empty-cart {
     display: none;
 }
 

@@ -57,8 +57,8 @@ function addToCart(gridItem) {
       <p class="cart-heading">${itemName}</p>
       <div class="quantity-wrap">
         <span class="quantity">${currentQuantity}x</span>
-        <span class="each-item">@$${itemPrice.toFixed(2)}</span>
-        <span class="item-total">@$${itemPrice.toFixed(2)}</span>
+        <span class="each-item">$${itemPrice.toFixed(2)}</span>
+        <span class="item-total">$${itemPrice.toFixed(2)}</span>
       </div>
     </div>
     <button class="remove-item">
@@ -78,8 +78,8 @@ function addToCart(gridItem) {
     </button>
   `;
 
-  // append the new car to the sidebar
-  const cartSidebar = document.querySelector(".side-wrap");
+  // append the new cart item to the sidebar
+  const cartSidebar = document.querySelector(".cart-container");
   if (cartSidebar) {
     cartSidebar.appendChild(cartItem);
   };
@@ -87,8 +87,8 @@ function addToCart(gridItem) {
   const cartButton = gridItem.querySelector(".cart-button");
   const cartPlusMinus = gridItem.querySelector(".cart-plus-minus");
   const gridItemQuantity = gridItem.querySelector(".item-quantity");
-  const dataGridItem = gridItem.getAttribute(`${itemName}`);
-  const dataCartItem = cartItem.getAttribute(`${itemName}`);
+  const dataGridItem = gridItem.getAttribute("data-label");
+  const dataCartItem = cartItem.getAttribute("data-label");
   updateCartItemCount();
 
   //  add functionality to remove the item from the cart
@@ -99,10 +99,10 @@ function addToCart(gridItem) {
     cartSidebar.removeChild(cartItem);
     updateCartItemCount();
 
-    if (dataGridItem == dataCartItem) {
-      cartPlusMinus.classList.remove("active")
+    if (dataGridItem === dataCartItem) {
+      cartPlusMinus.classList.remove("active");
       cartButton.classList.add("active");
-      gridItemQuantity.innerHTML = 1;
+      gridItemQuantity.innerText = 1;
     }
   });
 
@@ -163,16 +163,26 @@ function setupCartPlusMinus() {
 function updateCartItemCount() {
   const cartItems = document.querySelectorAll(".cart-item");
   const cartCountElement = document.querySelector(".cart-count");
+  const cartTotalAmount = document.querySelector(".total-amount");
   let totalQuantity = 0;
+  let totalAmount = 0;
 
   cartItems.forEach((item) => {
     const quantityText = item.querySelector(".quantity").innerText;
     const quantity = parseInt(quantityText);
     totalQuantity += quantity;
+
+    const totalAmtText = item.querySelector('.item-total').innerText.replace('$', '');
+    const total = parseFloat(totalAmtText);
+    totalAmount += total;
   });
 
   if (cartCountElement) {
-    cartCountElement.innerText = totalQuantity;
+    cartCountElement.innerText = `Your Cart (${totalQuantity})`;
+  }
+
+  if (cartTotalAmount) {
+    cartTotalAmount.innerHTML = `$${totalAmount.toFixed(2)}`;
   }
 }
 
@@ -257,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toggleButton();
       setupCartPlusMinus();
+      updateCartItemCount();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
