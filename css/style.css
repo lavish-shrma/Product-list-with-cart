@@ -280,7 +280,10 @@ strong {
 .more-less:active,
 .more-less:focus {
     background-color: var(--white);
-    color: var(--black);
+
+    & svg {
+        fill: var(--red);
+    }
 }
 
 /* sidebar starts from here */

@@ -45,10 +45,12 @@ function toggleButton() {
 };
 
 function addToCart(gridItem) {
+  // gets item details from gridItem
   const itemName = gridItem.querySelector('.tertiary-header').innerText;
   const itemPrice = parseFloat(gridItem.querySelector('.item-price').innerText.replace("$", ""));
   let currentQuantity = 1;
 
+  //  create the new cart popover markup 
   const cartItem = document.createElement('article');
   cartItem.classList.add('cart-item');
   cartItem.setAttribute('data-label', `${itemName}`);
@@ -77,11 +79,26 @@ function addToCart(gridItem) {
         </svg>
     </button>
   `;
+  // create the new cart popover item markup
+  const cartitemPopover = document.createElement('article');
+  cartitemPopover.classList.add('cart-item-popover');
+  cartitemPopover.innerHTML = `
+  <div class="cart-quantity">
+    <p class="cart-heading">${itemName}</p>
+    <div class="quantity-wrap">
+      <span class="quantity">${currentQuantity}x</span>
+      <span class="each-item">$${itemPrice.toFixed(2)}</span>
+      <span class="item-total">$${itemPrice.toFixed(2)}</span>
+    </div>
+  </div>
+  `
 
   // append the new cart item to the sidebar
   const cartSidebar = document.querySelector(".cart-container");
+  const cartPopover = document.querySelector('.cart-popover');
   if (cartSidebar) {
     cartSidebar.appendChild(cartItem);
+    cartPopover.appendChild(cartitemPopover);
   };
 
   const cartButton = gridItem.querySelector(".cart-button");
@@ -164,6 +181,7 @@ function updateCartItemCount() {
   const cartItems = document.querySelectorAll(".cart-item");
   const cartCountElement = document.querySelector(".cart-count");
   const cartTotalAmount = document.querySelector(".total-amount");
+  const cartTotalAmountPopover = document.querySelector(".total-amount-popover");
   let totalQuantity = 0;
   let totalAmount = 0;
 
@@ -183,12 +201,29 @@ function updateCartItemCount() {
 
   if (cartTotalAmount) {
     cartTotalAmount.innerHTML = `$${totalAmount.toFixed(2)}`;
+    cartTotalAmountPopover.innerHTML = `$${totalAmount.toFixed(2)}`;
   }
+}
+
+function clearCart() {
+  const clearCartBotton = document.getElementById("clear-cart");
+
+  clearCartBotton.addEventListener("click", () => {
+    const cartItems = document.querySelectorAll(".cart-item");
+    console.log(cartItems.length);
+
+    // loop through all cart items and remove them
+    if (cartItems.length >= 1) {
+      cartItems.forEach((item) => item.remove());
+    }
+
+    // update the cart item count and total amount after clearing
+    updateCartItemCount();
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   copyright();
-
   loadJson("data.json")
     .then((data) => {
       const gridWrap = document.querySelector(".grid-wrap");
@@ -268,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleButton();
       setupCartPlusMinus();
       updateCartItemCount();
+      clearCart();
     })
     .catch(error => {
       console.log(`Error loading JSON data: `, error);
