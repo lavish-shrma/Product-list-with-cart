@@ -15,7 +15,7 @@
     --spacing: 1rem;
 }
 
-/* Yes. If the SVGs are purely decorative, adding aria-hidden="true" is the right move. */
+/* If the SVGs are purely decorative, adding aria-hidden="true" is the right move. */
 
 /* .red-hat-text-<uniquifier> {
   font-family: "Red Hat Text", sans-serif;
