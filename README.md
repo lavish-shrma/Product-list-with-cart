@@ -70,9 +70,9 @@ Git + GitHub Pages	Versioning & hosting
 
     Built a modular, extendable cart logic that can scale to localStorage or backend easily.
 
-🌍 Live Demo
+🌍 Live Demo | 🔗 View Live Site
+https://product-list-with-cart-lavish-shrmas-projects.vercel.app/
 
-🔗 View Live Site
 📁 Folder Layout
 
 📦 product-list-with-cart
@@ -84,9 +84,6 @@ Git + GitHub Pages	Versioning & hosting
 ├── 📄 data.json       → product list source
 ├── 📄 style-guide.md  → color & typography guide
 └── 📄 README.md       → this file
-
-📷 Screenshots
-Desktop View	Mobile View
 	
 🧠 Key Learnings
 
