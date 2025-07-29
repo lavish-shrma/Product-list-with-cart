@@ -48,7 +48,7 @@ All while using zero frameworks, just the raw power of the DOM and logic.
 
     Built a cart model using vanilla JS — no libraries, just functions and memory.
 
-    DOM updates in response to user interaction: quantity control, remove items, reset, confirm.
+    DOM updates in response to user interaction: quantity control, removing items, resetting, and confirmation.
 
     Event delegation and dynamic rendering made the logic clean and fast.
 
